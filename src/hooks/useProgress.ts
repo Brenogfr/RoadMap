@@ -68,5 +68,8 @@ export function useProgress() {
     }))
   }, [])
 
-  return { state, toggleCheck, setLastTopic, addAttempt }
+  /** Substitui todo o progresso (importação de backup). O estado já deve estar validado. */
+  const replaceAll = useCallback((next: ProgressState) => setState(next), [])
+
+  return { state, toggleCheck, setLastTopic, addAttempt, replaceAll }
 }

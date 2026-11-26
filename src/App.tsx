@@ -1,4 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { ProgressBackup } from './components/roadmap/ProgressBackup'
 import { RoadmapHeader } from './components/roadmap/RoadmapHeader'
 import { Roadmap } from './components/roadmap/Roadmap'
 import { Drawer } from './components/ui/Drawer'
@@ -27,7 +28,7 @@ const topicTitles = new Map(modules.flatMap((m) => m.topics.map((t) => [t.id, t.
 const moduleOfTopic = new Map(modules.flatMap((m) => m.topics.map((t) => [t.id, m.id] as const)))
 
 export default function App() {
-  const { state: progress, toggleCheck, setLastTopic, addAttempt } = useProgress()
+  const { state: progress, toggleCheck, setLastTopic, addAttempt, replaceAll } = useProgress()
   const [selection, setSelection] = useState<Selection>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const close = useCallback(() => setSelection(null), [])
@@ -80,6 +81,7 @@ export default function App() {
           onContinue={() => next && openTopic(next.module.id, next.topic.id)}
         />
         <Roadmap modules={modules} progress={progress} onSelect={setSelection} />
+        <ProgressBackup progress={progress} modules={modules} onImport={replaceAll} />
       </main>
 
       <Drawer open={Boolean(module)} onClose={close} labelledBy={titleId} scrollRef={scrollRef}>
