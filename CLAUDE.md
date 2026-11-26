@@ -36,6 +36,7 @@ npm install
 npm run dev      # desenvolvimento
 npm run build    # tsc -b + vite build (sempre rode antes de commitar)
 npm run lint     # oxlint
+npm test         # Vitest: regras de progresso, correção, backup e validação do conteúdo
 ```
 
 ## Estrutura

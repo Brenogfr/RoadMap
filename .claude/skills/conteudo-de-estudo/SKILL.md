@@ -68,7 +68,9 @@ literals, escape `\`` e `\${`.
 3. Rode o TypeScript strict nos arquivos extraídos (com `@types/node`).
 4. Confirme cada link de documentação (status 200 ou o arquivo no repositório oficial da
    documentação). Sem confirmação, não publique o link.
-5. `npm run build` e `npm run lint` sem erros. Confira o tamanho do JS inicial no build:
+5. `npm test` passa: `src/data/content.test.ts` valida ids, lineNotes, pesos dos critérios,
+   palavras-chave e links de todo o conteúdo publicado.
+6. `npm run build` e `npm run lint` sem erros. Confira o tamanho do JS inicial no build:
    ele não deve crescer quando só conteúdo foi adicionado.
-6. Para avaliações, faça uma tentativa completa no navegador: todas erradas (nota baixa e
+7. Para avaliações, faça uma tentativa completa no navegador: todas erradas (nota baixa e
    feedback coerente) e todas certas com os critérios confirmados (100%).

@@ -48,6 +48,7 @@ Abra o endereço mostrado no terminal (normalmente http://localhost:5173).
 | `npm run build`   | Verificação de tipos + build de produção   |
 | `npm run preview` | Serve o build de produção localmente       |
 | `npm run lint`    | Lint com oxlint                            |
+| `npm test`        | Testes (Vitest): regras e validação do conteúdo |
 
 ## Estrutura
 
