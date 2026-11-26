@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight, ListChecks, LoaderCircle, X } from 'lucide-react'
-import { lazy, Suspense, type RefObject } from 'react'
+import { lazy, Suspense, useEffect, type RefObject } from 'react'
+import { whenIdle } from '../../lib/prefetch'
 import { useLazy } from '../../hooks/useLazy'
 import { accentStyles, pad2 } from '../../lib/accent'
 import { CHECKLIST_SIZE } from '../../lib/progress'
@@ -33,9 +34,14 @@ export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef, chec
   const done = checked.length >= CHECKLIST_SIZE
   const lesson = useLazy(topic.id, topic.loadLesson)
 
+  // Enquanto a pessoa lê, a próxima aula é baixada em segundo plano.
+  useEffect(() => {
+    if (next?.loadLesson) whenIdle(next.loadLesson)
+  }, [next])
+
   return (
     <div className="flex min-h-full flex-col">
-      <div className="sticky top-0 z-10 border-b border-line bg-[#070707]/95 px-5 pt-5 pb-4 backdrop-blur sm:px-8">
+      <div className="sticky top-0 z-10 border-b border-line bg-[#070707] px-5 pt-5 pb-4 sm:px-8">
         <div className="flex items-center justify-between gap-4">
           <span className={`truncate font-mono text-[11px] tracking-[0.1em] uppercase ${a.text}`}>
             {pad2(module.number)} {module.label} · Conteúdo {index + 1} de {module.topics.length}

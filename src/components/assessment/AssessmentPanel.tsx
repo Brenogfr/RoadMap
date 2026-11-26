@@ -66,7 +66,7 @@ export function AssessmentPanel(props: AssessmentPanelProps) {
 
   return (
     <div className="flex flex-col">
-      <div className="sticky top-0 z-10 border-b border-line bg-[#070707]/95 px-5 pt-5 pb-5 backdrop-blur sm:px-8">
+      <div className="sticky top-0 z-10 border-b border-line bg-[#070707] px-5 pt-5 pb-5 sm:px-8">
         <div className="flex items-center justify-between gap-4">
           <span className={`font-mono text-[11px] tracking-[0.1em] uppercase ${a.text}`}>
             Avaliação técnica · Módulo {pad2(module.number)}

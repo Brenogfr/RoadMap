@@ -39,7 +39,7 @@ export function Drawer({ open, onClose, labelledBy, children, scrollRef }: Drawe
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
+      <div className="absolute inset-0 bg-black/80" onClick={onClose} aria-hidden="true" />
       <div
         ref={panelRef}
         role="dialog"

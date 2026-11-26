@@ -16,6 +16,7 @@ import {
   overallProgress,
 } from './lib/progress'
 import type { Selection } from './types/ui'
+import { preloadLessonView, whenIdle } from './lib/prefetch'
 
 // A avaliação só é baixada quando alguém a abre.
 const AssessmentPanel = lazy(() =>
@@ -31,10 +32,20 @@ export default function App() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const close = useCallback(() => setSelection(null), [])
 
+  // Depois que a página carrega, baixa o leitor de aulas (~3 KB gzip) e a próxima aula a estudar.
+  useEffect(() => {
+    whenIdle(preloadLessonView)
+  }, [])
+
   const moduleIndex = selection ? modules.findIndex((m) => m.id === selection.moduleId) : -1
   const module = moduleIndex >= 0 ? modules[moduleIndex] : undefined
   const topic = selection?.kind === 'topic' ? module?.topics.find((t) => t.id === selection.topicId) : undefined
   const next = nextTopic(progress, modules)
+  const nextLoader = next?.topic.loadLesson
+
+  useEffect(() => {
+    if (nextLoader) whenIdle(nextLoader)
+  }, [nextLoader])
 
   const openTopic = useCallback((moduleId: string, topicId: string) => {
     setSelection({ kind: 'topic', moduleId, topicId })

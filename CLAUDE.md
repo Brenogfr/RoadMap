@@ -16,6 +16,10 @@ Todo conteúdo novo deve servir a isso.
   com `import()`; nunca importe uma aula de forma estática em código da interface.
   Referência atual do JS inicial: ~280 KB (~88 KB gzip). Se um build passar de ~300 KB,
   investigue antes de seguir.
+- **Rolagem fluida:** não use `backdrop-filter`/`backdrop-blur` (nem sombras ou filtros
+  animados) sobre áreas grandes ou que rolam: o navegador redesenha o efeito a cada quadro.
+  Medido neste projeto: 50 ms por quadro com desfoque, 16,7 ms (60 fps) sem. Use fundos sólidos.
+- Pré-carregamento só em ocioso (`whenIdle` em `lib/prefetch.ts`): leitor de aulas e a próxima aula.
 - Textos da interface e do conteúdo em português do Brasil.
 - Acessibilidade: elementos interativos são `<button>`, `<a>`, `<input>` reais, com alvo de
   toque ≥ 44px, foco visível e rótulos. Contraste mínimo 4.5:1 no tema escuro.
