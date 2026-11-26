@@ -79,8 +79,8 @@ src/
 
 ## Conteúdo publicado
 
-- Módulo 01 (Fundamentos) e Módulo 02 (NestJS) completos, com avaliação.
-- Módulos 03–10: estrutura em `src/data/modules/outline.ts`.
+- Módulo 01 (Fundamentos), Módulo 02 (NestJS) e Módulo 03 (DTOs e validação) completos, com avaliação.
+- Módulos 04–10: estrutura em `src/data/modules/outline.ts`.
 
 ## NestJS nas aulas (a partir do Módulo 02)
 

@@ -28,7 +28,7 @@ que problema resolve e como funciona por dentro, e não só acumular tecnologias
 |---|---|
 | 01 · Fundamentos de programação Back-end | ✅ 12 aulas, exercício e avaliação |
 | 02 · NestJS e arquitetura inicial | ✅ 11 aulas, exercício e avaliação |
-| 03 · DTOs e validação | Em preparação |
+| 03 · DTOs e validação | ✅ 10 aulas, exercício e avaliação |
 | 04 · APIs REST e CRUD (projeto integrado) | Em preparação |
 | 05 · Banco de dados | Em preparação |
 | 06 · Prisma ORM | Em preparação |

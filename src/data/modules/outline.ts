@@ -1,49 +1,13 @@
 import type { Module, PracticeTask, Topic } from '../../types/roadmap'
 
 /**
- * Módulos 02 a 10: estrutura (títulos, resumos, exercícios).
+ * Módulos 04 a 10: estrutura (títulos, resumos, exercícios).
  * As aulas completas serão adicionadas em lotes, módulo a módulo.
  */
 
 const t = (id: string, title: string, summary: string): Topic => ({ id, title, summary })
 
 const exercise = (task: Omit<PracticeTask, 'kind'>): PracticeTask => ({ kind: 'exercise', ...task })
-
-export const m03: Module = {
-  id: 'm03',
-  number: 3,
-  title: 'DTOs e validação',
-  label: 'DTOs e validação',
-  accent: 'purple',
-  description:
-    'Nunca confiar no que chega do cliente: definir o formato esperado dos dados, validar na entrada e responder com erros claros.',
-  topics: [
-    t('m03-dtos', 'O que são DTOs', 'Objetos que descrevem o formato dos dados que entram e saem.'),
-    t('m03-create-update', 'Create DTO e Update DTO', 'Por que criação e atualização têm regras diferentes.'),
-    t('m03-class-validator', 'Class Validator', 'Decorators de validação declarativa.'),
-    t('m03-class-transformer', 'Class Transformer', 'Transformar JSON puro em instâncias de classe.'),
-    t('m03-validationpipe', 'ValidationPipe', 'Onde e quando a validação acontece no Nest.'),
-    t('m03-whitelist', 'Whitelist', 'Remover propriedades que o DTO não declara.'),
-    t('m03-transform', 'Transform', 'Converter tipos automaticamente (string → number).'),
-    t('m03-forbid', 'ForbidNonWhitelisted', 'Rejeitar requisições com campos desconhecidos.'),
-    t('m03-validacao', 'Validação de dados', 'Regras de negócio x regras de formato.'),
-    t('m03-respostas-invalidas', 'Tratamento de respostas inválidas', 'Mensagens de erro úteis e consistentes.'),
-  ],
-  practice: exercise({
-    title: 'Cadastro validado',
-    description: 'Adicionar DTOs validados ao módulo de tarefas do exercício anterior.',
-    requirements: [
-      'CreateTarefaDto com título obrigatório (3 a 80 caracteres) e prioridade entre 1 e 5.',
-      'UpdateTarefaDto com todos os campos opcionais.',
-      'ValidationPipe global com whitelist, forbidNonWhitelisted e transform.',
-    ],
-    doneWhen: [
-      'POST com campo extra retorna 400 com mensagem clara.',
-      'Prioridade enviada como "3" chega ao service como número.',
-      'Você sabe dizer qual erro é de formato e qual seria de regra de negócio.',
-    ],
-  }),
-}
 
 export const m04: Module = {
   id: 'm04',

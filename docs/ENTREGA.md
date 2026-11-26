@@ -29,7 +29,8 @@ Resumo da Etapa 7: o que foi construído, como foi verificado e o que ainda falt
 |---|---|---|---|
 | 01 · Fundamentos de programação Back-end | 12 | 8 questões | Servidor de notas sem framework |
 | 02 · NestJS e arquitetura inicial | 11 | 8 questões | Módulo de usuários do zero |
-| 03 a 10 | estrutura (títulos e resumos) | a escrever | definido para cada módulo |
+| 03 · DTOs e validação | 10 | 8 questões | Cadastro de usuários validado |
+| 04 a 10 | estrutura (títulos e resumos) | a escrever | definido para cada módulo |
 
 O Módulo 04 tem o projeto integrado (API de gerenciamento de produtos) definido.
 
@@ -38,7 +39,7 @@ O Módulo 04 tem o projeto integrado (API de gerenciamento de produtos) definido
 ```
 src/
 ├── types/          roadmap.ts (aulas), assessment.ts (avaliações), progress.ts (dados salvos)
-├── data/           m01/, m02/ (uma aula por arquivo + avaliação), modules/outline.ts (03–10)
+├── data/           m01/, m02/, m03/ (uma aula por arquivo + avaliação), modules/outline.ts (04–10)
 ├── lib/            progress.ts e grading.ts (regras puras), backup.ts, prefetch.ts, scrolling.ts
 ├── hooks/          useProgress (LocalStorage), useLazy (carregamento sob demanda), useReadingPosition
 └── components/     roadmap/, study/, assessment/, ui/
@@ -54,10 +55,12 @@ src/
 - Módulo 02: compilado e executado em um projeto NestJS 12 real (ESM, TypeScript 6), com o
   tsconfig gerado pela CLI; requisições com curl e teste com Vitest. Mensagens de erro
   citadas nas aulas foram copiadas da execução real.
+- Módulo 03: mesmo processo, com class-validator 0.15, class-transformer 0.5 e
+  @nestjs/mapped-types 12; cada resposta HTTP citada foi reproduzida com curl.
 - Links de documentação conferidos (nodejs.org diretamente; MDN, TypeScript e NestJS pelos
   repositórios oficiais da documentação).
 
-**Testes automatizados no repositório** (`npm test`, 39 testes)
+**Testes automatizados no repositório** (`npm test`, 50 testes)
 - Regras de progresso, correção das avaliações e backup.
 - Validação de todo o conteúdo publicado: ids únicos, lineNotes dentro do código, pesos dos
   critérios somando 1, palavras-chave normalizadas, links e regras das avaliações.
@@ -65,7 +68,7 @@ src/
 **Testes no navegador** (Playwright, durante o desenvolvimento)
 - Navegação, abertura das aulas, checklists e persistência após recarregar: 25 cenários.
 - Avaliações: liberação, reprovação, aprovação, nova tentativa, histórico, rascunho e
-  desbloqueio do módulo seguinte: 28 cenários (Módulo 01) e 15 (Módulo 02).
+  desbloqueio do módulo seguinte: 28 cenários (Módulo 01), 15 (Módulo 02) e 15 (Módulo 03).
 - Retomada da leitura: 11 cenários. Backup: 13 cenários.
 - Responsividade: sem rolagem horizontal em 390 px.
 
@@ -96,5 +99,5 @@ então basta adicionar o passo de deploy ao workflow e ativar o Pages nas config
 
 ## Próximos passos
 
-1. Conteúdo dos Módulos 03 a 10, em lotes de um módulo, com a skill `conteudo-de-estudo`.
+1. Conteúdo dos Módulos 04 a 10, em lotes de um módulo, com a skill `conteudo-de-estudo`.
 2. Depois de concluir boa parte da trilha: avaliar a inclusão de IA Aplicada, como previsto.
