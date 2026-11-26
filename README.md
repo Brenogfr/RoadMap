@@ -1,6 +1,6 @@
 # Roadmap Back-end Engineering
 
-Ferramenta pessoal de estudos: roadmap visual da trilha de Back-end, com aulas
+Ferramenta pessoal de estudos (Módulos 01 e 02 completos): roadmap visual da trilha de Back-end, com aulas
 completas, exercícios, checklists de aprendizagem, avaliações técnicas por módulo
 e progresso salvo no navegador. Página leve: cada aula e cada avaliação só são
 baixadas quando abertas.

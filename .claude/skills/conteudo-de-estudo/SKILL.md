@@ -42,7 +42,9 @@ por dentro, como usar, como quebra e o que estudar em seguida. Profundidade vem 
 - **F · guidance**: antes, agora e depois, mais documentação oficial.
 
 Código em TypeScript, compatível com execução direta pelo Node.js (sem `enum`, `namespace`
-ou parameter properties fora de projetos NestJS). Strings sem crases internas; em template
+ou parameter properties fora de projetos NestJS). Em aulas de NestJS, siga o projeto gerado pela
+CLI atual (ESM, imports `.js`, Vitest) e compile com o tsconfig dela antes de publicar.
+Mensagens de erro citadas nas aulas devem ser copiadas de uma execução real, nunca de memória. Strings sem crases internas; em template
 literals, escape `\`` e `\${`.
 
 ## Avaliação: regras

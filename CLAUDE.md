@@ -76,6 +76,21 @@ src/
   (Node.js 22.18+ executa `.ts` direto) e passar no TypeScript strict. Os números de linha
   citados em `lineNotes` devem bater com o código.
 
+## Conteúdo publicado
+
+- Módulo 01 (Fundamentos) e Módulo 02 (NestJS) completos, com avaliação.
+- Módulos 03–10: estrutura em `src/data/modules/outline.ts`.
+
+## NestJS nas aulas (a partir do Módulo 02)
+
+- Versão de referência: NestJS 12 com a CLI 12. Projeto padrão é **ESM** (imports relativos
+  terminam em `.js`) e os testes usam **Vitest** (`vi.fn()`, não `jest.fn()`).
+- A CLI pergunta sobre o NestJS Observe; nas aulas a resposta é "não" e o `main.ts` não usa `instrument`.
+- O projeto `tarefas-api` evolui aula a aula; cada prática mostra os arquivos completos que mudam.
+- Para verificar, compile com o tsconfig gerado pela CLI (experimentalDecorators,
+  emitDecoratorMetadata, module nodenext) e rode `node dist/main.js`. Mensagens de erro citadas
+  nas aulas devem ser copiadas da execução real.
+
 ## Adicionar conteúdo
 
 Use a skill `conteudo-de-estudo` (`.claude/skills/conteudo-de-estudo/`) para escrever aulas

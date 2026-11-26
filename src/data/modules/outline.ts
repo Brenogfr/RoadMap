@@ -9,44 +9,6 @@ const t = (id: string, title: string, summary: string): Topic => ({ id, title, s
 
 const exercise = (task: Omit<PracticeTask, 'kind'>): PracticeTask => ({ kind: 'exercise', ...task })
 
-export const m02: Module = {
-  id: 'm02',
-  number: 2,
-  title: 'NestJS e arquitetura inicial',
-  label: 'NestJS',
-  accent: 'gold',
-  description:
-    'Como um framework organiza uma aplicação Node.js em módulos, controllers e providers, e por que a injeção de dependência muda a forma de escrever código.',
-  topics: [
-    t('m02-estrutura', 'Estrutura de um projeto NestJS', 'O que cada arquivo e pasta gerados pela CLI faz.'),
-    t('m02-appmodule', 'AppModule', 'O módulo raiz e como ele compõe a aplicação.'),
-    t('m02-feature-modules', 'Feature Modules', 'Dividir a aplicação por domínio (produtos, usuários).'),
-    t('m02-controllers', 'Controllers', 'Receber requisições e devolver respostas, sem regra de negócio.'),
-    t('m02-services', 'Services', 'Onde a regra de negócio mora e por quê.'),
-    t('m02-providers', 'Providers', 'Tudo o que o Nest sabe criar e injetar.'),
-    t('m02-di', 'Dependency Injection', 'Quem cria as dependências e por que isso facilita testes.'),
-    t('m02-constructors', 'Constructors', 'TypeScript aplicado à DI: como o Nest lê o construtor.'),
-    t('m02-private-readonly', 'Private e Readonly', 'Modificadores do TypeScript usados em toda classe Nest.'),
-    t('m02-decorators', 'Decorators', 'O que @Controller, @Get e @Injectable realmente fazem.'),
-    t('m02-fluxo', 'Fluxo de uma requisição no NestJS', 'Do socket ao método do controller e de volta.'),
-  ],
-  practice: exercise({
-    title: 'Primeiro módulo de feature',
-    description: 'Criar um projeto Nest com um módulo "tarefas" contendo controller e service, sem banco de dados.',
-    requirements: [
-      'Gerar o projeto com a CLI oficial do Nest.',
-      'Criar TarefasModule, TarefasController e TarefasService.',
-      'Guardar as tarefas em um array dentro do service.',
-      'Expor GET /tarefas e GET /tarefas/:id.',
-    ],
-    doneWhen: [
-      'O controller não contém regra de negócio, apenas delega ao service.',
-      'O service é recebido pelo construtor, nunca instanciado com new.',
-      'Você consegue explicar o caminho de uma requisição até o array.',
-    ],
-  }),
-}
-
 export const m03: Module = {
   id: 'm03',
   number: 3,
