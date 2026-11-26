@@ -14,7 +14,7 @@ Todo conteúdo novo deve servir a isso.
 - Não adicionar dependências sem necessidade clara. Hoje: React, Tailwind CSS e lucide-react.
 - **A página deve continuar leve.** Conteúdo (aulas e avaliações) é carregado sob demanda
   com `import()`; nunca importe uma aula de forma estática em código da interface.
-  Referência atual do JS inicial: ~280 KB (~88 KB gzip). Se um build passar de ~300 KB,
+  Referência atual do JS inicial: ~291 KB (~91 KB gzip). Se um build passar de ~300 KB,
   investigue antes de seguir.
 - **Rolagem fluida:** não use `backdrop-filter`/`backdrop-blur` (nem sombras ou filtros
   animados) sobre áreas grandes ou que rolam: o navegador redesenha o efeito a cada quadro.

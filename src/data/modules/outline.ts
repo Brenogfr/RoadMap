@@ -186,7 +186,7 @@ export const m08: Module = {
   topics: [
     t('m08-unitarios', 'Testes unitários', 'Testar uma unidade isolada, rápido e determinístico.'),
     t('m08-integracao', 'Testes de integração', 'Testar partes reais funcionando juntas.'),
-    t('m08-jest', 'Jest', 'describe, it, expect e o ciclo de vida dos testes.'),
+    t('m08-vitest', 'Vitest', 'describe, it, expect, vi.fn() e o ciclo de vida dos testes.'),
     t('m08-supertest', 'Supertest', 'Fazer requisições HTTP reais contra a aplicação.'),
     t('m08-mocks', 'Mocks', 'Substituir dependências e quando isso esconde problemas.'),
     t('m08-controllers', 'Testes de Controllers', 'O que vale (e o que não vale) testar no controller.'),

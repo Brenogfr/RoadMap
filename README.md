@@ -42,7 +42,8 @@ versão 12 (projeto ESM, testes com Vitest).
 
 ## Como usar
 
-Requisitos: **Node.js 20.19+ ou 22.12+** (testado com a linha 24).
+Requisitos: **Node.js 20.19+ ou 22.12+** para a página (testado com a linha 24). Para rodar os
+exemplos das aulas, use **Node.js 22.18+**, que executa arquivos `.ts` diretamente.
 
 ```bash
 git clone https://github.com/Brenogfr/RoadMap.git
@@ -78,7 +79,7 @@ Aulas e avaliações são carregadas sob demanda, para a página continuar leve.
 
 ```
 src/
-├── data/          conteúdo: m01/, m02/ (uma aula por arquivo) e modules/outline.ts
+├── data/          conteúdo: m01/, m02/, m03/ (uma aula por arquivo) e modules/outline.ts
 ├── types/         formato das aulas, avaliações e do progresso salvo
 ├── lib/           regras de progresso e de correção (funções puras)
 ├── hooks/         progresso no LocalStorage e carregamento sob demanda
