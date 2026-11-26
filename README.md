@@ -24,8 +24,14 @@ ficam no histórico do módulo.
   e o módulo anterior foi aprovado (nota mínima de 70%).
 - Módulos futuros podem ser lidos e estudados; só a avaliação fica bloqueada.
 - Cada aula reabre no ponto em que você parou de ler, com um atalho para voltar ao início.
+- Exportar e importar progresso (rodapé da página) gera e lê um backup em JSON.
 - Tudo é salvo no LocalStorage do navegador, na chave `roadmap-backend:v1`.
   Limpar os dados do site apaga o progresso.
+
+## Acesso
+
+Publicado no GitHub Pages: https://brenogfr.github.io/RoadMap/ (após ativar em Settings → Pages → Source: GitHub Actions).
+Resumo completo da entrega em [docs/ENTREGA.md](docs/ENTREGA.md).
 
 ## Requisitos
 
