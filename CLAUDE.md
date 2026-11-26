@@ -19,6 +19,11 @@ Todo conteúdo novo deve servir a isso.
 - **Rolagem fluida:** não use `backdrop-filter`/`backdrop-blur` (nem sombras ou filtros
   animados) sobre áreas grandes ou que rolam: o navegador redesenha o efeito a cada quadro.
   Medido neste projeto: 50 ms por quadro com desfoque, 16,7 ms (60 fps) sem. Use fundos sólidos.
+- A área rolável do painel tem fundo opaco e camada própria (`will-change: transform` no
+  Drawer), e o painel não tem sombra grande: sem isso, em telas com escala 100% o Chrome
+  repinta a página inteira a cada passo da rolagem.
+- Hover é desligado durante a rolagem (`lib/scrolling.ts` + `html[data-rolando]` em
+  `index.css`). Roadmap em CPU 4× mais lenta: 35 quadros descartados → 1.
 - Pré-carregamento só em ocioso (`whenIdle` em `lib/prefetch.ts`): leitor de aulas e a próxima aula.
 - Textos da interface e do conteúdo em português do Brasil.
 - Acessibilidade: elementos interativos são `<button>`, `<a>`, `<input>` reais, com alvo de

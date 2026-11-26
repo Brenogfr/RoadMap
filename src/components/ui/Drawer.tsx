@@ -46,10 +46,10 @@ export function Drawer({ open, onClose, labelledBy, children, scrollRef }: Drawe
         aria-modal="true"
         aria-labelledby={labelledBy}
         tabIndex={-1}
-        className="relative flex h-full w-full max-w-3xl flex-col border-l border-line bg-[#070707] shadow-2xl outline-none"
+        className="relative flex h-full w-full max-w-3xl flex-col border-l border-line bg-[#070707] outline-none"
       >
-        <div ref={scrollRef} className="h-full overflow-y-auto overscroll-contain">
-          {children}
+        <div ref={scrollRef} className="h-full overflow-y-auto overscroll-contain bg-[#070707] [will-change:transform]">
+          <div className="scroll-content">{children}</div>
         </div>
       </div>
     </div>

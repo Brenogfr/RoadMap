@@ -45,6 +45,12 @@
     font-variant-ligatures: none;
     font-feature-settings: 'liga' 0, 'calt' 0;
   }
+  /* Sem hover durante a rolagem (lib/scrolling.ts). O próprio scroller continua recebendo a roda. */
+  html[data-rolando] main,
+  html[data-rolando] .scroll-content {
+    pointer-events: none;
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-accent-blue);
     outline-offset: 2px;
