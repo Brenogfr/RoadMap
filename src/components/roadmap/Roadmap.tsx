@@ -39,6 +39,7 @@ export function Roadmap({ modules, progress, onSelect }: RoadmapProps) {
                 bestScore={bestScore(progress, module.id)}
                 lastScore={attempts.at(-1)?.score ?? null}
                 onOpenModule={openModule}
+                onOpenAssessment={() => onSelect({ kind: 'assessment', moduleId: module.id })}
               />
             </div>
           )

@@ -1,8 +1,21 @@
 # Roadmap Back-end Engineering
 
 Ferramenta pessoal de estudos: roadmap visual da trilha de Back-end, com aulas
-completas, exercícios, checklists de aprendizagem e progresso salvo no navegador.
-As avaliações técnicas por módulo chegam na próxima etapa.
+completas, exercícios, checklists de aprendizagem, avaliações técnicas por módulo
+e progresso salvo no navegador. Página leve: cada aula e cada avaliação só são
+baixadas quando abertas.
+
+## Avaliações
+
+Cada módulo tem uma avaliação de 5 a 8 questões, corrigida em três passos, sem IA:
+
+1. Questões de escolha são corrigidas automaticamente.
+2. Nas abertas, palavras-chave apenas sinalizam critérios prováveis.
+3. Você compara sua resposta com a esperada e confirma cada critério atendido.
+
+O feedback traz nota, pontos fortes, conceitos a melhorar, respostas que precisam de
+atenção, conteúdos para revisar e exercícios de reforço. Tentativas são ilimitadas e
+ficam no histórico do módulo.
 
 ## Progresso
 
@@ -42,16 +55,19 @@ src/
 ├── types/roadmap.ts        Tipos do conteúdo (módulo, aula, exercício)
 ├── data/
 │   ├── index.ts            Ordem dos módulos
-│   ├── m01/                Módulo 01: uma aula por arquivo
+│   ├── m01/                Módulo 01: metadados, uma aula por arquivo e a avaliação
 │   └── modules/outline.ts  Módulos 02–10: estrutura e exercícios
 ├── hooks/useProgress.ts    Estado de progresso + LocalStorage
 ├── lib/progress.ts         Regras de status (funções puras)
+├── lib/grading.ts          Nota e feedback das avaliações (funções puras)
 ├── lib/                    Cores, layout, status e realce de sintaxe
 └── components/
     ├── roadmap/            Cabeçalho, módulos, cards e conexões
     ├── study/              Painel de estudo e seções A–F
+    ├── assessment/         Avaliação, correção e feedback
     └── ui/                 Drawer (painel lateral)
 ```
 
 Para adicionar ou corrigir uma aula, edite apenas os arquivos em `src/data/`.
-Os componentes só renderizam o conteúdo.
+Os componentes só renderizam o conteúdo. Com o Claude Code, a skill
+`conteudo-de-estudo` (em `.claude/skills/`) descreve o formato e a verificação.

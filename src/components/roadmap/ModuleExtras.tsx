@@ -11,10 +11,11 @@ interface ModuleExtrasProps {
   bestScore: number | null
   lastScore: number | null
   onOpenModule: () => void
+  onOpenAssessment: () => void
 }
 
 /** Exercício/projeto do módulo e o card da avaliação técnica, abaixo de cada módulo. */
-export function ModuleExtras({ module, status, completed, bestScore, lastScore, onOpenModule }: ModuleExtrasProps) {
+export function ModuleExtras({ module, status, completed, bestScore, lastScore, onOpenModule, onOpenAssessment }: ModuleExtrasProps) {
   const practice = module.practice
   const isProject = practice?.kind === 'project'
   const missing = module.topics.length - completed
@@ -28,7 +29,7 @@ export function ModuleExtras({ module, status, completed, bestScore, lastScore, 
           text: `Aprove o Módulo ${pad2(module.number - 1)} para liberar a avaliação`,
         }
       case 'aguardando-avaliacao':
-        return { tone: 'warn', icon: ClipboardCheck, text: 'Avaliação liberada · disponível na próxima etapa do projeto' }
+        return { tone: 'warn', icon: ClipboardCheck, text: module.loadAssessment ? 'Avaliação liberada · comece quando quiser' : 'Avaliação liberada · será publicada junto com as aulas' }
       case 'precisa-revisar':
         return { tone: 'bad', icon: ClipboardCheck, text: `Última nota ${lastScore}% · revise os pontos indicados e tente de novo` }
       case 'aprovado':
@@ -100,7 +101,7 @@ export function ModuleExtras({ module, status, completed, bestScore, lastScore, 
       {interactive ? (
         <button
           type="button"
-          onClick={onOpenModule}
+          onClick={onOpenAssessment}
           className={`flex min-h-[60px] w-full items-center gap-3.5 rounded-lg border px-4 transition-colors hover:brightness-125 ${toneClass}`}
         >
           {assessmentBody}

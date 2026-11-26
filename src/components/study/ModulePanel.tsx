@@ -16,12 +16,14 @@ interface ModulePanelProps {
   progress: ProgressState
   onClose: () => void
   onOpenTopic: (topicId: string) => void
+  onOpenAssessment: (attemptId?: string) => void
 }
 
 const dateFormat = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
 
 /** Visão geral do módulo: status, conteúdos, avaliação, histórico e exercício/projeto. */
-export function ModulePanel({ module, status, completed, attempts, progress, onClose, onOpenTopic }: ModulePanelProps) {
+export function ModulePanel({ module, status, completed, attempts, progress, onClose, onOpenTopic, onOpenAssessment }: ModulePanelProps) {
+  const canTake = Boolean(module.loadAssessment) && (status === 'aguardando-avaliacao' || status === 'precisa-revisar' || status === 'aprovado')
   const a = accentStyles[module.accent]
   const practice = module.practice
   const missing = module.topics.length - completed
@@ -30,7 +32,7 @@ export function ModulePanel({ module, status, completed, attempts, progress, onC
     bloqueado: `A avaliação é liberada depois da aprovação no Módulo ${pad2(module.number - 1)}. Você já pode ler os conteúdos e marcar os checklists.`,
     'nao-iniciado': `Conclua os ${module.topics.length} conteúdos (todos os itens do checklist) para liberar a avaliação.`,
     'em-andamento': `Faltam ${missing} conteúdo${missing === 1 ? '' : 's'} para liberar a avaliação.`,
-    'aguardando-avaliacao': 'Todos os conteúdos foram concluídos. A avaliação está liberada e será implementada na próxima etapa do projeto.',
+    'aguardando-avaliacao': 'Todos os conteúdos foram concluídos. A avaliação está liberada.',
     'precisa-revisar': `A última tentativa ficou abaixo de ${PASSING_SCORE}%. Revise os pontos indicados no feedback e tente de novo.`,
     aprovado: 'Módulo aprovado. O próximo módulo foi liberado, e você pode revisitar este quando quiser.',
   }
@@ -112,6 +114,15 @@ export function ModulePanel({ module, status, completed, attempts, progress, onC
           </div>
           <p className="text-[14px] leading-relaxed text-[#cfcfcf]">{assessmentText[status]}</p>
           <p className="text-[13px] text-fg-subtle">5 a 8 questões · aprovação com {PASSING_SCORE}% · tentativas ilimitadas</p>
+          {canTake && (
+            <button
+              type="button"
+              onClick={() => onOpenAssessment()}
+              className="min-h-11 self-start rounded-lg bg-fg px-4 text-sm font-semibold text-ink transition-colors hover:bg-white"
+            >
+              {attempts.length ? 'Nova tentativa' : 'Fazer avaliação'}
+            </button>
+          )}
 
           <div className="flex flex-col gap-2 border-t border-line pt-4">
             <h4 className="font-display text-[11px] font-semibold uppercase tracking-[0.12em] text-fg-subtle">Histórico de tentativas</h4>
@@ -120,13 +131,19 @@ export function ModulePanel({ module, status, completed, attempts, progress, onC
             ) : (
               <ol className="flex flex-col gap-1.5">
                 {[...attempts].reverse().map((attempt, i) => (
-                  <li key={attempt.id} className="flex items-center justify-between gap-3 text-[13px]">
-                    <span className="text-fg-muted">
-                      Tentativa {attempts.length - i} · {dateFormat.format(new Date(attempt.finishedAt))}
-                    </span>
-                    <span className={`font-mono ${attempt.passed ? 'text-ok' : 'text-bad'}`}>
-                      {attempt.score}% · {attempt.passed ? 'aprovado' : 'revisar'}
-                    </span>
+                  <li key={attempt.id}>
+                    <button
+                      type="button"
+                      onClick={() => onOpenAssessment(attempt.id)}
+                      className="flex min-h-10 w-full items-center justify-between gap-3 rounded-md px-2 text-left text-[13px] transition-colors hover:bg-raised"
+                    >
+                      <span className="text-fg-muted">
+                        Tentativa {attempts.length - i} · {dateFormat.format(new Date(attempt.finishedAt))}
+                      </span>
+                      <span className={`font-mono ${attempt.passed ? 'text-ok' : 'text-bad'}`}>
+                        {attempt.score}% · {attempt.passed ? 'aprovado' : 'revisar'} · ver feedback
+                      </span>
+                    </button>
                   </li>
                 ))}
               </ol>

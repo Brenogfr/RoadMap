@@ -1,3 +1,5 @@
+import type { Assessment } from './assessment'
+
 /**
  * Tipos do conteúdo do roadmap.
  * Todo o conteúdo (módulos, aulas, exercícios) é dado estático tipado:
@@ -118,8 +120,11 @@ export interface Topic {
   title: string
   /** Uma frase sobre o que o conteúdo cobre. */
   summary: string
-  /** Aula completa. Ausente enquanto o conteúdo ainda não foi escrito. */
-  lesson?: Lesson
+  /**
+   * Carrega a aula completa sob demanda (import dinâmico), para que o conteúdo
+   * não pese no carregamento inicial da página. Ausente enquanto a aula não foi escrita.
+   */
+  loadLesson?: () => Promise<Lesson>
 }
 
 export interface PracticeTask {
@@ -142,4 +147,6 @@ export interface Module {
   description: string
   topics: Topic[]
   practice?: PracticeTask
+  /** Carrega a avaliação técnica sob demanda. Ausente enquanto não foi escrita. */
+  loadAssessment?: () => Promise<Assessment>
 }

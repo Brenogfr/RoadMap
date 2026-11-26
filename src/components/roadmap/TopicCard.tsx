@@ -19,6 +19,7 @@ export function TopicCard({ topic, status, checked, onOpen }: TopicCardProps) {
     <button
       type="button"
       onClick={onOpen}
+      onPointerEnter={() => void topic.loadLesson?.()}
       title={topic.summary || topic.title}
       aria-label={`${topic.title}: ${meta.label}`}
       className={`group flex h-11 w-full items-center gap-3 rounded-md border bg-surface px-3.5 text-left text-sm font-semibold text-fg transition-colors hover:border-line-strong hover:bg-raised ${
@@ -27,7 +28,7 @@ export function TopicCard({ topic, status, checked, onOpen }: TopicCardProps) {
     >
       <StatusDot className={meta.dot} />
       <span className="min-w-0 flex-1 truncate">{topic.title}</span>
-      {!topic.lesson && <span className="shrink-0 font-mono text-[11px] font-normal text-fg-subtle">em breve</span>}
+      {!topic.loadLesson && <span className="shrink-0 font-mono text-[11px] font-normal text-fg-subtle">em breve</span>}
       {status === 'em-andamento' && (
         <span className={`shrink-0 font-mono text-xs font-medium ${meta.text}`}>
           {checked}/{CHECKLIST_SIZE}

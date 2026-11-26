@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { RoadmapHeader } from './components/roadmap/RoadmapHeader'
 import { Roadmap } from './components/roadmap/Roadmap'
 import { Drawer } from './components/ui/Drawer'
@@ -6,12 +6,27 @@ import { ModulePanel } from './components/study/ModulePanel'
 import { TopicPanel } from './components/study/TopicPanel'
 import { modules } from './data'
 import { useProgress } from './hooks/useProgress'
-import { MODULE_TITLE_ID, TOPIC_TITLE_ID } from './lib/layout'
-import { attemptsOf, completedTopicCount, moduleStatus, nextTopic, overallProgress } from './lib/progress'
+import { ASSESSMENT_TITLE_ID, MODULE_TITLE_ID, TOPIC_TITLE_ID } from './lib/layout'
+import {
+  attemptsOf,
+  completedTopicCount,
+  isAssessmentUnlocked,
+  moduleStatus,
+  nextTopic,
+  overallProgress,
+} from './lib/progress'
 import type { Selection } from './types/ui'
 
+// A avaliação só é baixada quando alguém a abre.
+const AssessmentPanel = lazy(() =>
+  import('./components/assessment/AssessmentPanel').then((m) => ({ default: m.AssessmentPanel })),
+)
+
+const topicTitles = new Map(modules.flatMap((m) => m.topics.map((t) => [t.id, t.title] as const)))
+const moduleOfTopic = new Map(modules.flatMap((m) => m.topics.map((t) => [t.id, m.id] as const)))
+
 export default function App() {
-  const { state: progress, toggleCheck, setLastTopic } = useProgress()
+  const { state: progress, toggleCheck, setLastTopic, addAttempt } = useProgress()
   const [selection, setSelection] = useState<Selection>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const close = useCallback(() => setSelection(null), [])
@@ -30,11 +45,17 @@ export default function App() {
     if (selection?.kind === 'topic') setLastTopic(selection.moduleId, selection.topicId)
   }, [selection, setLastTopic])
 
-  // Ao trocar de conteúdo, volta ao topo do painel.
-  const selectionKey = selection ? (selection.kind === 'topic' ? selection.topicId : selection.moduleId) : ''
+  // Ao trocar o que está aberto, volta ao topo do painel.
+  const selectionKey = selection
+    ? selection.kind === 'topic'
+      ? selection.topicId
+      : `${selection.kind}:${selection.moduleId}:${selection.kind === 'assessment' ? (selection.attemptId ?? '') : ''}`
+    : ''
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 })
   }, [selectionKey])
+
+  const titleId = selection?.kind === 'topic' ? TOPIC_TITLE_ID : selection?.kind === 'assessment' ? ASSESSMENT_TITLE_ID : MODULE_TITLE_ID
 
   return (
     <div className="min-h-screen bg-ink">
@@ -51,12 +72,7 @@ export default function App() {
         <Roadmap modules={modules} progress={progress} onSelect={setSelection} />
       </main>
 
-      <Drawer
-        open={Boolean(module)}
-        onClose={close}
-        labelledBy={topic ? TOPIC_TITLE_ID : MODULE_TITLE_ID}
-        scrollRef={scrollRef}
-      >
+      <Drawer open={Boolean(module)} onClose={close} labelledBy={titleId} scrollRef={scrollRef}>
         {module && topic && (
           <TopicPanel
             module={module}
@@ -68,7 +84,7 @@ export default function App() {
             onToggle={(itemId) => toggleCheck(topic.id, itemId)}
           />
         )}
-        {module && !topic && (
+        {module && selection?.kind === 'module' && (
           <ModulePanel
             module={module}
             status={moduleStatus(progress, modules, moduleIndex)}
@@ -77,7 +93,25 @@ export default function App() {
             progress={progress}
             onClose={close}
             onOpenTopic={(topicId) => openTopic(module.id, topicId)}
+            onOpenAssessment={(attemptId) => setSelection({ kind: 'assessment', moduleId: module.id, attemptId })}
           />
+        )}
+        {module && selection?.kind === 'assessment' && (
+          <Suspense fallback={<p className="p-8 text-sm text-fg-subtle">Carregando avaliação…</p>}>
+            <AssessmentPanel
+              module={module}
+              available={isAssessmentUnlocked(progress, modules, moduleIndex)}
+              attempts={attemptsOf(progress, module.id)}
+              attemptId={selection.attemptId}
+              topicTitle={(id) => topicTitles.get(id) ?? id}
+              scrollRef={scrollRef}
+              onSubmit={(attempt) => addAttempt(module.id, attempt)}
+              // Um id que não existe no histórico remonta o fluxo e começa uma tentativa em branco.
+              onRetry={() => setSelection({ kind: 'assessment', moduleId: module.id, attemptId: `nova-${Date.now()}` })}
+              onOpenTopic={(topicId) => openTopic(moduleOfTopic.get(topicId) ?? module.id, topicId)}
+              onClose={close}
+            />
+          </Suspense>
         )}
       </Drawer>
     </div>

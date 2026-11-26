@@ -10,6 +10,7 @@ export const blockHeight = (count: number) => (count > 0 ? count * CARD_HEIGHT +
 // Painel lateral
 export const TOPIC_TITLE_ID = 'painel-conteudo-titulo'
 export const MODULE_TITLE_ID = 'painel-modulo-titulo'
+export const ASSESSMENT_TITLE_ID = 'painel-avaliacao-titulo'
 
 // Seções de uma aula (A–F)
 export const LESSON_SECTIONS = [

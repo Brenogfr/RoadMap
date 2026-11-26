@@ -94,10 +94,10 @@ export function nextTopic(state: ProgressState, modules: Module[]): { module: Mo
   if (state.lastTopic) {
     const module = modules.find((m) => m.id === state.lastTopic?.moduleId)
     const topic = module?.topics.find((t) => t.id === state.lastTopic?.topicId)
-    if (module && topic && topic.lesson && !isTopicDone(state, topic)) return { module, topic }
+    if (module && topic && topic.loadLesson && !isTopicDone(state, topic)) return { module, topic }
   }
   for (const module of modules) {
-    const topic = module.topics.find((t) => t.lesson && !isTopicDone(state, t))
+    const topic = module.topics.find((t) => t.loadLesson && !isTopicDone(state, t))
     if (topic) return { module, topic }
   }
   return null

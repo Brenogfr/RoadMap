@@ -1,12 +1,15 @@
-import { ChevronLeft, ChevronRight, ListChecks, X } from 'lucide-react'
-import type { RefObject } from 'react'
+import { ChevronLeft, ChevronRight, ListChecks, LoaderCircle, X } from 'lucide-react'
+import { lazy, Suspense, type RefObject } from 'react'
+import { useLazy } from '../../hooks/useLazy'
 import { accentStyles, pad2 } from '../../lib/accent'
 import { CHECKLIST_SIZE } from '../../lib/progress'
 import type { ChecklistItemId } from '../../types/progress'
 import type { Module, Topic } from '../../types/roadmap'
 import { Checklist } from './Checklist'
 import { LESSON_SECTIONS, TOPIC_TITLE_ID, sectionDomId } from '../../lib/layout'
-import { LessonView } from './LessonView'
+
+// O renderizador da aula (e o realce de código) só é baixado ao abrir a primeira aula.
+const LessonView = lazy(() => import('./LessonView').then((m) => ({ default: m.LessonView })))
 
 interface TopicPanelProps {
   module: Module
@@ -28,6 +31,7 @@ export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef, chec
     scrollRef.current?.querySelector<HTMLElement>(`#${domId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
   const done = checked.length >= CHECKLIST_SIZE
+  const lesson = useLazy(topic.id, topic.loadLesson)
 
   return (
     <div className="flex min-h-full flex-col">
@@ -48,7 +52,7 @@ export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef, chec
         <h2 id={TOPIC_TITLE_ID} className="mt-1 font-display text-2xl font-bold tracking-tight sm:text-3xl">
           {topic.title}
         </h2>
-        {topic.lesson && (
+        {topic.loadLesson && (
           <nav aria-label="Seções da aula" className="mt-4 -mx-1 flex gap-1.5 overflow-x-auto px-1 pb-0.5">
             {LESSON_SECTIONS.map((s) => (
               <button
@@ -75,9 +79,30 @@ export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef, chec
       </div>
 
       <div className="flex-1 px-5 py-8 sm:px-8">
-        {topic.lesson ? (
-          <LessonView lesson={topic.lesson} />
-        ) : (
+        {lesson.status === 'ready' && (
+          <Suspense fallback={<p className="text-sm text-fg-subtle">Carregando aula…</p>}>
+            <LessonView lesson={lesson.data} />
+          </Suspense>
+        )}
+        {lesson.status === 'loading' && (
+          <p role="status" className="flex items-center gap-2 text-sm text-fg-subtle">
+            <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />
+            Carregando aula…
+          </p>
+        )}
+        {lesson.status === 'error' && (
+          <div role="alert" className="flex flex-col items-start gap-3 rounded-lg border border-[#46241a] p-5 text-sm text-fg-muted">
+            Não foi possível carregar a aula. Verifique a conexão e tente de novo.
+            <button
+              type="button"
+              onClick={lesson.retry}
+              className="min-h-10 rounded-md border border-line-strong px-3 text-fg transition-colors hover:bg-raised"
+            >
+              Tentar de novo
+            </button>
+          </div>
+        )}
+        {lesson.status === 'none' && (
           <div className="flex flex-col gap-3 rounded-lg border border-dashed border-line-strong p-6">
             <span className="font-display text-[11px] font-semibold uppercase tracking-[0.12em] text-fg-subtle">
               Aula em preparação
@@ -89,7 +114,7 @@ export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef, chec
           </div>
         )}
         <div className="mt-14">
-          <Checklist checked={checked} onToggle={onToggle} disabled={!topic.lesson} />
+          <Checklist checked={checked} onToggle={onToggle} disabled={!topic.loadLesson} />
         </div>
       </div>
 
