@@ -1,7 +1,10 @@
-import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ListChecks, X } from 'lucide-react'
 import type { RefObject } from 'react'
 import { accentStyles, pad2 } from '../../lib/accent'
+import { CHECKLIST_SIZE } from '../../lib/progress'
+import type { ChecklistItemId } from '../../types/progress'
 import type { Module, Topic } from '../../types/roadmap'
+import { Checklist } from './Checklist'
 import { LESSON_SECTIONS, TOPIC_TITLE_ID, sectionDomId } from '../../lib/layout'
 import { LessonView } from './LessonView'
 
@@ -10,19 +13,21 @@ interface TopicPanelProps {
   topic: Topic
   onClose: () => void
   onNavigate: (topicId: string) => void
+  checked: ChecklistItemId[]
+  onToggle: (itemId: ChecklistItemId) => void
   scrollRef: RefObject<HTMLDivElement | null>
 }
 
-export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef }: TopicPanelProps) {
+export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef, checked, onToggle }: TopicPanelProps) {
   const a = accentStyles[module.accent]
   const index = module.topics.findIndex((t) => t.id === topic.id)
   const prev = module.topics[index - 1]
   const next = module.topics[index + 1]
 
-  const goToSection = (id: (typeof LESSON_SECTIONS)[number]['id']) => {
-    const el = scrollRef.current?.querySelector<HTMLElement>(`#${sectionDomId(id)}`)
-    el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const scrollTo = (domId: string) => {
+    scrollRef.current?.querySelector<HTMLElement>(`#${domId}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
+  const done = checked.length >= CHECKLIST_SIZE
 
   return (
     <div className="flex min-h-full flex-col">
@@ -49,12 +54,22 @@ export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef }: To
               <button
                 key={s.id}
                 type="button"
-                onClick={() => goToSection(s.id)}
+                onClick={() => scrollTo(sectionDomId(s.id))}
                 className="shrink-0 rounded-md border border-line px-2.5 py-1.5 text-xs whitespace-nowrap text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
               >
                 <span className="font-mono text-fg-subtle">{s.letter}</span> · {s.short}
               </button>
             ))}
+            <button
+              type="button"
+              onClick={() => scrollTo('checklist')}
+              className={`flex shrink-0 items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs whitespace-nowrap transition-colors hover:text-fg ${
+                done ? 'border-[#1d3a2a] text-ok' : 'border-[#2e3b52] text-accent-blue-soft'
+              }`}
+            >
+              <ListChecks aria-hidden="true" className="size-3.5" />
+              Checklist {checked.length}/{CHECKLIST_SIZE}
+            </button>
           </nav>
         )}
       </div>
@@ -73,6 +88,9 @@ export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef }: To
             </p>
           </div>
         )}
+        <div className="mt-14">
+          <Checklist checked={checked} onToggle={onToggle} disabled={!topic.lesson} />
+        </div>
       </div>
 
       <nav aria-label="Navegação entre conteúdos" className="grid grid-cols-2 gap-3 border-t border-line px-5 py-5 sm:px-8">

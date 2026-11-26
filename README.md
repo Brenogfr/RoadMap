@@ -1,7 +1,17 @@
 # Roadmap Back-end Engineering
 
 Ferramenta pessoal de estudos: roadmap visual da trilha de Back-end, com aulas
-completas, exercícios e (nas próximas etapas) checklists, progresso e avaliações.
+completas, exercícios, checklists de aprendizagem e progresso salvo no navegador.
+As avaliações técnicas por módulo chegam na próxima etapa.
+
+## Progresso
+
+- Cada conteúdo tem um checklist de 6 itens; ele só conta como concluído com os 6 marcados.
+- A avaliação de um módulo é liberada quando todos os conteúdos estão concluídos
+  e o módulo anterior foi aprovado (nota mínima de 70%).
+- Módulos futuros podem ser lidos e estudados; só a avaliação fica bloqueada.
+- Tudo é salvo no LocalStorage do navegador, na chave `roadmap-backend:v1`.
+  Limpar os dados do site apaga o progresso.
 
 ## Requisitos
 
@@ -34,7 +44,9 @@ src/
 │   ├── index.ts            Ordem dos módulos
 │   ├── m01/                Módulo 01: uma aula por arquivo
 │   └── modules/outline.ts  Módulos 02–10: estrutura e exercícios
-├── lib/                    Cores, layout e realce de sintaxe
+├── hooks/useProgress.ts    Estado de progresso + LocalStorage
+├── lib/progress.ts         Regras de status (funções puras)
+├── lib/                    Cores, layout, status e realce de sintaxe
 └── components/
     ├── roadmap/            Cabeçalho, módulos, cards e conexões
     ├── study/              Painel de estudo e seções A–F
