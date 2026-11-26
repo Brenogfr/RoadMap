@@ -43,7 +43,7 @@ src/
 ├── hooks/          useProgress (LocalStorage), useLazy (carregamento sob demanda), useReadingPosition
 └── components/     roadmap/, study/, assessment/, ui/
 .claude/skills/conteudo-de-estudo/   como escrever e verificar aulas e avaliações
-.github/workflows/deploy.yml         CI (lint, testes, build) e publicação no GitHub Pages
+.github/workflows/ci.yml             CI: lint, testes e build
 ```
 
 ## Como foi verificado
@@ -76,9 +76,10 @@ src/
 
 ## Publicação
 
-O workflow publica o site no GitHub Pages a cada push no `main`. É preciso ativar uma vez:
-**Settings → Pages → Build and deployment → Source: GitHub Actions**. O endereço será
-`https://brenogfr.github.io/RoadMap/`.
+O repositório é público para outros desenvolvedores estudarem e compartilharem. O CI
+(`.github/workflows/ci.yml`) roda lint, testes e build a cada push e pull request. A publicação
+no GitHub Pages fica para o futuro: o build já usa caminhos relativos e funciona em subcaminho,
+então basta adicionar o passo de deploy ao workflow e ativar o Pages nas configurações.
 
 ## Limitações conhecidas
 

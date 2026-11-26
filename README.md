@@ -1,81 +1,101 @@
 # Roadmap Back-end Engineering
 
-Ferramenta pessoal de estudos (Módulos 01 e 02 completos): roadmap visual da trilha de Back-end, com aulas
-completas, exercícios, checklists de aprendizagem, avaliações técnicas por módulo
-e progresso salvo no navegador. Página leve: cada aula e cada avaliação só são
-baixadas quando abertas.
+Uma trilha de estudos de Back-end com **JavaScript, TypeScript, Node.js e NestJS**, organizada
+como um mapa visual. Cada conteúdo tem uma aula completa, com código que roda de verdade,
+exercícios práticos, checklist de aprendizagem e uma avaliação técnica por módulo.
 
-## Avaliações
+O objetivo é aprender a **pensar como Back-end Engineer**: entender por que cada coisa existe,
+que problema resolve e como funciona por dentro, e não só acumular tecnologias.
 
-Cada módulo tem uma avaliação de 5 a 8 questões, corrigida em três passos, sem IA:
+![Roadmap com os módulos, os conteúdos e o progresso](docs/roadmap.png)
 
-1. Questões de escolha são corrigidas automaticamente.
-2. Nas abertas, palavras-chave apenas sinalizam critérios prováveis.
-3. Você compara sua resposta com a esperada e confirma cada critério atendido.
+## O que tem em cada aula
 
-O feedback traz nota, pontos fortes, conceitos a melhorar, respostas que precisam de
-atenção, conteúdos para revisar e exercícios de reforço. Tentativas são ilimitadas e
-ficam no histórico do módulo.
+| Seção | Conteúdo |
+|---|---|
+| A · Introdução | O que é, para que serve, que problema resolve, por que existe e onde é usado |
+| B · Explicação técnica | Funcionamento interno, conceitos e exemplos explicados linha por linha |
+| C · Fluxo | Diagrama em etapas do que acontece por baixo |
+| D · Exemplo prático | Projeto pequeno e executável, com testes para o Thunder Client |
+| E · Erros comuns | Mensagens reais, causa e correção |
+| F · Próximos passos | O que estudar antes, agora e depois, e a documentação oficial |
 
-## Progresso
+![Aula aberta no painel de estudo, com código comentado](docs/aula.png)
 
-- Cada conteúdo tem um checklist de 6 itens; ele só conta como concluído com os 6 marcados.
-- A avaliação de um módulo é liberada quando todos os conteúdos estão concluídos
-  e o módulo anterior foi aprovado (nota mínima de 70%).
-- Módulos futuros podem ser lidos e estudados; só a avaliação fica bloqueada.
-- Cada aula reabre no ponto em que você parou de ler, com um atalho para voltar ao início.
-- Exportar e importar progresso (rodapé da página) gera e lê um backup em JSON.
-- Tudo é salvo no LocalStorage do navegador, na chave `roadmap-backend:v1`.
-  Limpar os dados do site apaga o progresso.
+## Conteúdo
 
-## Acesso
+| Módulo | Situação |
+|---|---|
+| 01 · Fundamentos de programação Back-end | ✅ 12 aulas, exercício e avaliação |
+| 02 · NestJS e arquitetura inicial | ✅ 11 aulas, exercício e avaliação |
+| 03 · DTOs e validação | Em preparação |
+| 04 · APIs REST e CRUD (projeto integrado) | Em preparação |
+| 05 · Banco de dados | Em preparação |
+| 06 · Prisma ORM | Em preparação |
+| 07 · Autenticação e segurança | Em preparação |
+| 08 · Testes automatizados | Em preparação |
+| 09 · Arquitetura de software | Em preparação |
+| 10 · Infraestrutura e produção | Em preparação |
 
-Publicado no GitHub Pages: https://brenogfr.github.io/RoadMap/ (após ativar em Settings → Pages → Source: GitHub Actions).
-Resumo completo da entrega em [docs/ENTREGA.md](docs/ENTREGA.md).
+Todo o código das aulas foi executado antes de ser publicado. As aulas de NestJS usam a
+versão 12 (projeto ESM, testes com Vitest).
 
-## Requisitos
+## Como usar
 
-- Node.js 20.19+ ou 22.12+ (testado com a linha 24)
-
-## Como rodar
+Requisitos: **Node.js 20.19+ ou 22.12+** (testado com a linha 24).
 
 ```bash
+git clone https://github.com/Brenogfr/RoadMap.git
+cd RoadMap
 npm install
 npm run dev
 ```
 
 Abra o endereço mostrado no terminal (normalmente http://localhost:5173).
 
-## Scripts
+### Como funciona o progresso
 
-| Script            | O que faz                                  |
-| ----------------- | ------------------------------------------ |
-| `npm run dev`     | Servidor de desenvolvimento com hot reload |
-| `npm run build`   | Verificação de tipos + build de produção   |
-| `npm run preview` | Serve o build de produção localmente       |
-| `npm run lint`    | Lint com oxlint                            |
-| `npm test`        | Testes (Vitest): regras e validação do conteúdo |
+- Cada conteúdo tem um checklist de 6 itens; ele só conta como concluído com os 6 marcados.
+- A avaliação de um módulo libera quando todos os conteúdos estão concluídos e o módulo
+  anterior foi aprovado (nota mínima de 70%). Módulos futuros podem ser lidos à vontade.
+- As avaliações são corrigidas sem IA, em três passos: questões de escolha automáticas; nas
+  abertas, você compara sua resposta com a esperada e confirma cada critério atendido.
+- O progresso fica **só no seu navegador** (não há servidor nem banco de dados). Use
+  "Exportar progresso", no fim da página, para guardar um backup.
 
-## Estrutura
+## Para desenvolvedores
+
+| Comando | O que faz |
+|---|---|
+| `npm run dev` | Servidor de desenvolvimento |
+| `npm run build` | Verificação de tipos e build de produção |
+| `npm run preview` | Serve o build localmente |
+| `npm run lint` | Lint com oxlint |
+| `npm test` | Testes (Vitest): regras de progresso, correção e validação do conteúdo |
+
+Stack: React, TypeScript, Tailwind CSS e lucide-react, sem outras dependências de execução.
+Aulas e avaliações são carregadas sob demanda, para a página continuar leve.
 
 ```
 src/
-├── types/roadmap.ts        Tipos do conteúdo (módulo, aula, exercício)
-├── data/
-│   ├── index.ts            Ordem dos módulos
-│   ├── m01/                Módulo 01: metadados, uma aula por arquivo e a avaliação
-│   └── modules/outline.ts  Módulos 02–10: estrutura e exercícios
-├── hooks/useProgress.ts    Estado de progresso + LocalStorage
-├── lib/progress.ts         Regras de status (funções puras)
-├── lib/grading.ts          Nota e feedback das avaliações (funções puras)
-├── lib/                    Cores, layout, status e realce de sintaxe
-└── components/
-    ├── roadmap/            Cabeçalho, módulos, cards e conexões
-    ├── study/              Painel de estudo e seções A–F
-    ├── assessment/         Avaliação, correção e feedback
-    └── ui/                 Drawer (painel lateral)
+├── data/          conteúdo: m01/, m02/ (uma aula por arquivo) e modules/outline.ts
+├── types/         formato das aulas, avaliações e do progresso salvo
+├── lib/           regras de progresso e de correção (funções puras)
+├── hooks/         progresso no LocalStorage e carregamento sob demanda
+└── components/    roadmap, painel de estudo e avaliações
 ```
 
-Para adicionar ou corrigir uma aula, edite apenas os arquivos em `src/data/`.
-Os componentes só renderizam o conteúdo. Com o Claude Code, a skill
-`conteudo-de-estudo` (em `.claude/skills/`) descreve o formato e a verificação.
+Para corrigir ou adicionar uma aula, edite apenas `src/data/`. O formato e a forma de
+verificar estão descritos em [.claude/skills/conteudo-de-estudo](.claude/skills/conteudo-de-estudo/SKILL.md).
+Detalhes da construção e dos testes estão em [docs/ENTREGA.md](docs/ENTREGA.md).
+
+## Contribuições
+
+Encontrou um erro em uma aula, um link quebrado ou uma explicação confusa?
+Abra uma [issue](https://github.com/Brenogfr/RoadMap/issues) indicando o módulo, a aula e a seção.
+
+## Licença
+
+- **Código** da aplicação: [MIT](LICENSE).
+- **Conteúdo** (aulas, avaliações, exercícios e documentação): [CC BY 4.0](LICENSE-CONTEUDO.md).
+  Você pode compartilhar e adaptar, desde que dê o crédito.
