@@ -1,7 +1,8 @@
-import { ChevronLeft, ChevronRight, ListChecks, LoaderCircle, X } from 'lucide-react'
+import { ArrowUp, ChevronLeft, ChevronRight, ListChecks, LoaderCircle, X } from 'lucide-react'
 import { lazy, Suspense, useEffect, type RefObject } from 'react'
 import { whenIdle } from '../../lib/prefetch'
 import { useLazy } from '../../hooks/useLazy'
+import { useReadingPosition } from '../../hooks/useReadingPosition'
 import { accentStyles, pad2 } from '../../lib/accent'
 import { CHECKLIST_SIZE } from '../../lib/progress'
 import type { ChecklistItemId } from '../../types/progress'
@@ -33,6 +34,7 @@ export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef, chec
   }
   const done = checked.length >= CHECKLIST_SIZE
   const lesson = useLazy(topic.id, topic.loadLesson)
+  const { resumed, backToTop } = useReadingPosition(topic.id, lesson.status === 'ready', scrollRef)
 
   // Enquanto a pessoa lê, a próxima aula é baixada em segundo plano.
   useEffect(() => {
@@ -60,6 +62,17 @@ export function TopicPanel({ module, topic, onClose, onNavigate, scrollRef, chec
         </h2>
         {topic.loadLesson && (
           <nav aria-label="Seções da aula" className="mt-4 -mx-1 flex gap-1.5 overflow-x-auto px-1 pb-0.5">
+            {resumed && (
+              <button
+                type="button"
+                onClick={backToTop}
+                title="Você continuou de onde parou. Clique para voltar ao início da aula."
+                className="flex shrink-0 items-center gap-1.5 rounded-md border border-[#2e3b52] bg-[#060a11] px-2.5 py-1.5 text-xs whitespace-nowrap text-accent-blue-soft transition-colors hover:text-fg"
+              >
+                <ArrowUp aria-hidden="true" className="size-3.5" />
+                Continuando · voltar ao início
+              </button>
+            )}
             {LESSON_SECTIONS.map((s) => (
               <button
                 key={s.id}

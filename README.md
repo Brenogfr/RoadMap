@@ -23,6 +23,7 @@ ficam no histórico do módulo.
 - A avaliação de um módulo é liberada quando todos os conteúdos estão concluídos
   e o módulo anterior foi aprovado (nota mínima de 70%).
 - Módulos futuros podem ser lidos e estudados; só a avaliação fica bloqueada.
+- Cada aula reabre no ponto em que você parou de ler, com um atalho para voltar ao início.
 - Tudo é salvo no LocalStorage do navegador, na chave `roadmap-backend:v1`.
   Limpar os dados do site apaga o progresso.
 

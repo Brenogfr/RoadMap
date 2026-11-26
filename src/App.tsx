@@ -56,12 +56,11 @@ export default function App() {
     if (selection?.kind === 'topic') setLastTopic(selection.moduleId, selection.topicId)
   }, [selection, setLastTopic])
 
-  // Ao trocar o que está aberto, volta ao topo do painel.
-  const selectionKey = selection
-    ? selection.kind === 'topic'
-      ? selection.topicId
-      : `${selection.kind}:${selection.moduleId}:${selection.kind === 'assessment' ? (selection.attemptId ?? '') : ''}`
-    : ''
+  // Ao trocar de painel, volta ao topo. Aulas cuidam da própria posição (continuam de onde parou).
+  const selectionKey =
+    selection && selection.kind !== 'topic'
+      ? `${selection.kind}:${selection.moduleId}:${selection.kind === 'assessment' ? (selection.attemptId ?? '') : ''}`
+      : ''
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 })
   }, [selectionKey])

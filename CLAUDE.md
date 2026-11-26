@@ -61,6 +61,9 @@ src/
 - **Progresso:** só fatos são salvos (itens marcados, tentativas, último conteúdo).
   Status, totais e liberações são sempre calculados em `lib/progress.ts`.
   Mudança incompatível no formato salvo exige uma chave nova (`roadmap-backend:v2`) e migração.
+- **Posição de leitura:** cada aula reabre onde parou (`hooks/useReadingPosition.ts`, chave
+  `roadmap-backend:leitura`). É conveniência, separada do progresso; aula lida até o fim reabre no início.
+  Não altere a altura do cabeçalho fixo do painel dinamicamente: quebra a posição salva e os atalhos de seção.
 - **Conclusão:** um conteúdo só está concluído com os 6 itens do checklist marcados.
   A avaliação libera com todos os conteúdos concluídos e o módulo anterior aprovado (≥ 70%).
   Módulos futuros podem ser lidos; só a avaliação fica bloqueada.
